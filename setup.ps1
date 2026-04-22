@@ -1,7 +1,7 @@
 # =============================================================================
-# GO Science Skill — Setup Script for Windows
+# GO Science Skill -- Setup Script for Windows
 # Run this once to install the skill into Claude Code
-# Usage: Right-click setup.ps1 → "Run with PowerShell"
+# Usage: Right-click setup.ps1 ? "Run with PowerShell"
 #        OR open PowerShell and run: .\setup.ps1
 # =============================================================================
 
@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
 
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "  GO Science Skill — Installer (Windows)" -ForegroundColor Cyan
+Write-Host "  GO Science Skill -- Installer (Windows)" -ForegroundColor Cyan
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -78,7 +78,7 @@ if (-not (Test-Path $personalContextFile)) {
     Copy-Item -Path $srcContext -Destination $personalContextFile -Force
     Write-Host "  my-go-context.md created (fill in your business details)." -ForegroundColor Green
 } else {
-    Write-Host "  my-go-context.md already exists — not overwritten." -ForegroundColor Yellow
+    Write-Host "  my-go-context.md already exists -- not overwritten." -ForegroundColor Yellow
 }
 
 # --- Step 8: Update settings.json ---
