@@ -66,10 +66,15 @@ echo -e "${GREEN}  Landing page knowledge base copied to: $LANDING_PAGE_KB_FILE$
 
 # --- Step 7: Copy SKILL.md and replace path placeholder ---
 echo -e "${WHITE}Installing skill file...${NC}"
-sed "s|{{KNOWLEDGE_BASE_PATH}}|$KNOWLEDGE_FILE|g;s|{{LANDING_PAGE_KB_PATH}}|$LANDING_PAGE_KB_FILE|g;s|{{PERSONAL_CONTEXT_PATH}}|$PERSONAL_CONTEXT_FILE|g" \
+KIT_KB_FILE="$SKILL_DIR/kit-knowledge.md"
+sed "s|{{KNOWLEDGE_BASE_PATH}}|$KNOWLEDGE_FILE|g;s|{{LANDING_PAGE_KB_PATH}}|$LANDING_PAGE_KB_FILE|g;s|{{PERSONAL_CONTEXT_PATH}}|$PERSONAL_CONTEXT_FILE|g;s|{{KIT_KB_PATH}}|$KIT_KB_FILE|g" \
     "$SCRIPT_DIR/marketplace/skills/go-science/SKILL.md" \
     > "$SKILL_DIR/SKILL.md"
 echo -e "${GREEN}  SKILL.md installed with correct paths.${NC}"
+
+# Copy KIT knowledge base
+cp "$SCRIPT_DIR/marketplace/skills/go-science/kit-knowledge.md" "$SKILL_DIR/kit-knowledge.md"
+echo -e "${GREEN}  kit-knowledge.md installed.${NC}"
 
 # Copy personal context template (only if not already present)
 if [ ! -f "$PERSONAL_CONTEXT_FILE" ]; then

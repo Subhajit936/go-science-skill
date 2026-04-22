@@ -64,14 +64,23 @@ Write-Host "  Landing page knowledge base copied to: $landingPageKbFile" -Foregr
 Write-Host "Installing skill file..." -ForegroundColor White
 $srcSkill = Join-Path $scriptDir "marketplace\skills\go-science\SKILL.md"
 $skillContent = Get-Content -Path $srcSkill -Raw -Encoding UTF8
+$kitKbFile = Join-Path $skillDir "kit-knowledge.md"
 $skillContent = $skillContent -replace '\{\{KNOWLEDGE_BASE_PATH\}\}', $knowledgeFile.Replace('\', '\\')
 $skillContent = $skillContent -replace '\{\{LANDING_PAGE_KB_PATH\}\}', $landingPageKbFile.Replace('\', '\\')
 $skillContent = $skillContent -replace '\{\{PERSONAL_CONTEXT_PATH\}\}', $personalContextFile.Replace('\', '\\')
+$skillContent = $skillContent -replace '\{\{KIT_KB_PATH\}\}', $kitKbFile.Replace('\', '\\')
 $destSkill = Join-Path $skillDir "SKILL.md"
 Set-Content -Path $destSkill -Value $skillContent -Encoding UTF8 -NoNewline
 Write-Host "  SKILL.md installed with correct paths." -ForegroundColor Green
 
-# --- Step 7b: Copy personal context template ---
+# --- Step 7b: Copy KIT knowledge base ---
+Write-Host "Installing KIT knowledge base..." -ForegroundColor White
+$srcKitKb = Join-Path $scriptDir "marketplace\skills\go-science\kit-knowledge.md"
+$destKitKb = Join-Path $skillDir "kit-knowledge.md"
+Copy-Item -Path $srcKitKb -Destination $destKitKb -Force
+Write-Host "  kit-knowledge.md installed." -ForegroundColor Green
+
+# --- Step 7d: Copy personal context template ---
 Write-Host "Installing personal context template..." -ForegroundColor White
 $srcContext = Join-Path $scriptDir "marketplace\skills\go-science\my-go-context.md"
 if (-not (Test-Path $personalContextFile)) {

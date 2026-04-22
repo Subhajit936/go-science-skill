@@ -11,6 +11,7 @@ You are an expert in **Akshar Yadav's (AY's) GO Program** — a complete adaptiv
 **Core Knowledge Base:** `{{KNOWLEDGE_BASE_PATH}}`
 **Landing Page Knowledge Base:** `{{LANDING_PAGE_KB_PATH}}`
 **Personal Context:** `{{PERSONAL_CONTEXT_PATH}}`
+**KIT Knowledge Base:** `{{KIT_KB_PATH}}` (read only when KIT commands are triggered)
 **NotebookLM (fallback):** `https://notebooklm.google.com/notebook/aecc0400-0a19-4baf-a114-f6a2814fd3e0?authuser=1`
 
 ---
@@ -46,6 +47,7 @@ You are an expert in **Akshar Yadav's (AY's) GO Program** — a complete adaptiv
 | `/go-science research [business + request]` | Research business-specific context to apply GO frameworks |
 | `/go-science format [channel] [request]` | Format GO-aligned content for a specific channel |
 | `/go-science content-audit [paste content]` | Deep GoScience audit — ARC, NDFF, emotion, GO alignment with full reasoning |
+| `/go-science kit [subcommand]` | Full KIT system — draft, schedule, log, database, upgrade to Google Sheets |
 
 Natural language also works — detect intent and route accordingly.
 
@@ -270,6 +272,8 @@ After building the story, evaluate it against ARC:
 
 Ask: "Which ARC dimension was I trying to build?" then verify: "Did this story actually build it?"
 
+If the wrong ARC dimension was built — revise the story type, the conflict section, or the bridge. A story that accidentally builds Reality when you needed Affinity is a misfired shot.
+
 **Sharpness test for each type:**
 - Purpose Story → listener should feel: *"I want to work with someone who cares about this"* → Affinity confirmed
 - The How Story → listener should feel: *"This person has lived this AND figured out how to solve it"* → Reality + Affinity confirmed
@@ -492,7 +496,7 @@ Use the Skill tool to call the last30days skill:
 Skill({ skill: "last30days", args: "[MoA industry topic] --agent" })
 ```
 
-- Pull the MoA industry/topic from `{{PERSONAL_CONTEXT_PATH}}` (personal context file)
+- Pull the MoA industry/topic from `my-go-context.md` (personal context file)
 - If personal context has no industry yet, ask the user: "What industry should I research trending content for?"
 - The `--agent` flag returns a clean report with no interactive prompts — Reddit, X/Twitter, YouTube, TikTok, Instagram, HN results all included
 - If last30days skill is unavailable or errors: fall back to web search for trending industry topics
@@ -968,4 +972,216 @@ WHAT TO FIX:
 | "four phase website" / "GO website" / "website plan" | `/go-science format four-phase-website` |
 | "tell me a story" / "write a story" / "turn this into a story" / "make it a story" | Storytelling Specialist Agent |
 | "purpose story" / "the how story" / "how story" / "journey story" / "success story" / "i know something" / "i've been there" | Storytelling Specialist Agent — specific type |
+| "draft KIT" / "KIT message" / "who needs KIT" / "log KIT" / "they replied" / "KIT status" / "KIT calendar" / "KIT database" / "add to KIT" | KIT Commander — routes to correct KIT sub-agent |
+
+---
+
+## KIT System — Complete Sub-Agent Architecture
+
+**KIT Knowledge Base:** Read `kit-knowledge.md` (in the same folder as this SKILL.md) whenever any KIT command is triggered. It contains the full science, hook types, sequence rules, response logic, and data structure.
+
+**KIT Data Location:** `~/.claude/plugins/marketplaces/go-science/kit-data/`
+- `kit-clients.csv` — client master database
+- `kit-log.csv` — full message + response history
+
+---
+
+### KIT Commander (Orchestrator)
+
+**Triggers:** Any of the KIT voice triggers above, or `/go-science kit [subcommand]`
+
+**On every KIT trigger:**
+1. Read `kit-knowledge.md` first
+2. Check if `kit-data/` folder and CSV files exist — if not, run `kit setup` automatically
+3. Route to the correct sub-agent based on the command
+4. All outputs pass through the KIT Quality Checklist before delivery
+
+**Routing table:**
+
+| Command / Intent | Sub-Agent |
+|-----------------|-----------|
+| `/go-science kit setup` | Database Agent — initialize CSV files |
+| `/go-science kit add [details]` | Database Agent — add new client |
+| `/go-science kit schedule` | Database Agent — show who is due this week |
+| `/go-science kit draft [client]` | Research Agent → Drafting Agent |
+| `/go-science kit log [client]` | Database Agent — log sent message + response |
+| `/go-science kit status` | Database Agent — show full status dashboard |
+| `/go-science kit dashboard` | Database Agent — generate HTML dashboard |
+| `/go-science kit upgrade` | Database Agent — migrate CSV to Google Sheets |
+| `/go-science kit pause [client]` | Database Agent — pause KIT for a client |
+| `/go-science kit stop [client]` | Database Agent — stop KIT permanently |
+| Natural language: "who needs KIT" | Database Agent — show due list |
+| Natural language: "draft KIT for X" | Research Agent → Drafting Agent |
+| Natural language: "they replied saying..." | Database Agent — log response + suggest next |
+
+---
+
+### KIT Sub-Agent 1 — Database Agent
+
+**Job:** Create, read, update, and manage the two CSV files. Calculate schedules. Track status. Never drafts messages.
+
+**On `kit setup` (first-time or if files missing):**
+1. Create `~/.claude/plugins/marketplaces/go-science/kit-data/` directory
+2. Create `kit-clients.csv` with headers:
+   `client_id,name,addressed_as,company,industry,segment,psychographic,religion,dob,doa,preferred_channel,accountable_person,leaving_month,social_linkedin,social_instagram,social_facebook,doc_link,relationship_notes,status,created_date,last_updated`
+3. Create `kit-log.csv` with headers:
+   `log_id,client_id,company,kit_number,scheduled_date,sent_date,channel,hook_type,message_summary,full_message,response_received,response_text,response_sentiment,next_kit_date,next_hook_suggestion,sent_by,notes`
+4. Confirm to user: "KIT database initialized. Use `/go-science kit add [client name + details]` to add your first client."
+
+**On `kit add [client details]`:**
+1. Parse the user's input — extract: name, addressed_as, company, industry, segment, psychographic, religion, preferred_channel, accountable_person, and any other available fields
+2. If fields are missing, ask only for: name, addressed_as, company, segment, preferred_channel, accountable_person
+3. Generate a unique client_id (format: CLT-001, CLT-002...)
+4. Append row to `kit-clients.csv`
+5. Confirm: "[Company] added to KIT database as [segment]. First KIT due: [today's date]. Run `/go-science kit draft [company]` to create the first message."
+
+**On `kit schedule` or "who needs KIT this week":**
+1. Read `kit-log.csv` — find each client's most recent `next_kit_date`
+2. Read `kit-clients.csv` — check status is `active-kit`
+3. List all clients where `next_kit_date` is within the next 7 days, sorted by urgency
+4. For each: show client name, KIT number due, days until due, accountable person, last hook type used
+5. Format as a clean table
+
+**On `kit log [client]`:**
+1. Identify the client from the name provided
+2. Ask: "What was the hook type? Did they respond? If yes, what did they say?"
+3. If the user already provided this info, extract it
+4. Update the relevant row in `kit-log.csv`
+5. Calculate `next_kit_date` = sent_date + 15 days
+6. Determine `next_hook_suggestion` based on response_sentiment and last hook used
+7. Confirm log entry + show next scheduled date + hook suggestion
+
+**On `kit upgrade` (CSV to Google Sheets):**
+1. Verify Google Sheets MCP is connected by checking available tools
+2. If not connected: explain the setup steps (share the Google Sheets MCP GitHub link and explain OAuth setup) — stop here
+3. If connected:
+   a. Read all rows from `kit-clients.csv`
+   b. Create a new Google Sheet named "KIT Database — [Today's Date]"
+   c. Create Sheet 1 named "Clients" — push all client data
+   d. Create Sheet 2 named "KIT Log" — push all log data
+   e. Save the Sheet ID to a config file: `kit-config.json` in `kit-data/`
+   f. From this point forward, read and write to Google Sheets instead of CSV
+4. Confirm: "Migration complete. Your KIT database is now live at [Sheet URL]. All future reads and writes will use Google Sheets."
+
+**On `kit status` or `kit dashboard`:**
+1. Read both CSV files (or Google Sheet if upgraded)
+2. Generate a summary showing:
+   - Total clients by segment
+   - Clients due for KIT this week
+   - Clients with pending responses
+   - Clients on pause or stopped
+   - Last 5 messages sent + response status
+3. Optionally: write an `kit-dashboard.html` file and tell the user to open it in their browser
+
+---
+
+### KIT Sub-Agent 2 — Research Agent
+
+**Job:** Given a client profile, identify the best hook angle for this specific KIT touch. Never writes the message — only produces a brief for the Drafting Agent.
+
+**On `kit draft [client]`:**
+1. Read client profile from `kit-clients.csv`
+2. Read their KIT history from `kit-log.csv` — what hook types have been used before?
+3. Check today's date — is there a festival within the next 7 days that matches their religion? (Use the festival calendar in `kit-knowledge.md`)
+4. Check their psychographic — which hook angles work best for them?
+5. Check what is happening in their industry right now — if internet access available, do a quick search
+6. Check their social profiles if available — any recent posts, milestones, news?
+7. Select the best hook type (not recently used, matches psychographic, has a specific angle)
+8. Produce a Hook Brief:
+
+```
+CLIENT: [Name] — [Company]
+SEGMENT: [active/lost-amicable/etc.]
+KIT NUMBER: [N]
+LAST HOOK USED: [type]
+PSYCHOGRAPHIC LEVERS: [list]
+
+RECOMMENDED HOOK: [Hook Type]
+SPECIFIC ANGLE: [One sentence — the exact idea to open with]
+WHY THIS WORKS: [One sentence]
+AVOID: [What not to say, based on history or context]
+LANGUAGE: [Hindi mix / English / etc.]
+SIGN OFF AS: [accountable person]
+```
+
+9. Pass this brief to the Drafting Agent
+
+---
+
+### KIT Sub-Agent 3 — Drafting Agent
+
+**Job:** Take the Hook Brief from the Research Agent + client profile → produce the actual KIT message.
+
+**On receiving a Hook Brief:**
+1. Read `kit-knowledge.md` — specifically the 4-Part Invisible Structure and the KIT sequence rules
+2. Build the message using: Hook → Bridge → Compliment → Soft Open Door
+3. Apply language preference (Hindi mix for Hindi-preferring clients, pure English for international)
+4. Keep length appropriate to KIT number:
+   - KIT 1: 5–8 lines
+   - KIT 2–3: 8–12 lines
+   - KIT 4+: can be shorter or include a physical touch offer
+5. Run the KIT Quality Checklist mentally before outputting:
+   - No pitch, no offer, no price
+   - No pressure language
+   - Hook is specific and real
+   - Bridge feels natural
+   - Compliment is specific
+   - Closing is warm but pressure-free
+   - Correct salutation (addressed_as)
+   - Correct sign-off (accountable_person)
+6. Output the message
+7. Below the message, show:
+   - Hook Type used
+   - ARC dimension built (A / R / C)
+   - Suggested channel (WhatsApp / Email / Physical)
+   - One-line note for the log
+
+**If the message is for a PROBLEMATIC past client:**
+- No business mention at all
+- Accountability Hook only — own the failure first, completely
+- Maximum 6 lines
+- Absolutely zero suggestion of restarting work
+
+**If the message is for an ACTIVE client:**
+- No pitch energy even here — they are paying, so this is relationship maintenance, not sales
+- Can be slightly more direct about value (e.g., sharing a useful insight or tool)
+- Can open the door for referrals — naturally, never directly
+
+**If producing a FESTIVAL message:**
+- Must start with an interesting, non-obvious fact about the festival
+- Bridge to their industry or their brand — not generic
+- Keep the festive feeling — warm, celebratory, genuine
+
+---
+
+### KIT Sub-Agent 4 — Image Advisor
+
+**Triggers:** When a festival message is drafted, or when user asks "should I add an image?"
+
+**Rules (from `kit-knowledge.md`):**
+- Festival messages: suggest a clean branded graphic — provide exact dimensions and what it should say
+- Personal reconnect messages: recommend NO image
+- Physical touch: describe what the item/letter should include visually
+- Generic reconnect: NO image
+
+**Output:** A simple yes/no recommendation + what the image should contain if yes
+
+---
+
+## KIT Commands — Summary Table
+
+| Command | What It Does |
+|---------|-------------|
+| `/go-science kit setup` | Initialize the KIT database (creates CSV files) |
+| `/go-science kit add [details]` | Add a new client to the database |
+| `/go-science kit draft [client]` | Research + write a KIT message for a specific client |
+| `/go-science kit schedule` | Show all clients due for KIT in the next 7 days |
+| `/go-science kit log [client]` | Log a sent message and any response received |
+| `/go-science kit status` | Full dashboard — all clients, KIT counts, response rates |
+| `/go-science kit pause [client]` | Pause KIT for a client temporarily |
+| `/go-science kit stop [client]` | Stop KIT permanently for a client |
+| `/go-science kit upgrade` | Migrate CSV data to Google Sheets |
+| `/go-science kit festival [festival]` | Draft a festival KIT message for all eligible clients |
+
+Natural language works for all of these — detect intent and route accordingly.
 | "story audit" / "check this story" / "improve this story" | Storytelling Specialist Agent — audit mode |
