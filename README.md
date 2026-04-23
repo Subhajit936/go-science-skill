@@ -40,10 +40,32 @@ The skill uses a multi-agent architecture:
 
 ## Requirements
 
-Before installing, make sure you have:
-- **Claude Code** installed and set up (run it at least once so the `.claude` folder exists)
-- For **Windows**: PowerShell 5.1 or later (comes with Windows 10/11 — no need to install anything)
-- For **Mac/Linux**: Python 3 (already installed on most Macs and Linux systems)
+### Core (required for all features)
+
+| Requirement | Windows | Mac / Linux | Notes |
+|------------|---------|------------|-------|
+| **Claude Code** | ✅ Required | ✅ Required | Must be run at least once so the `.claude` folder exists |
+| **PowerShell 5.1+** | ✅ Required | — | Comes pre-installed on Windows 10/11 |
+| **Python 3** | — | ✅ Required | Pre-installed on most Macs and Linux; check with `python3 --version` |
+| **Git** | Optional | Optional | Only needed if downloading from GitHub instead of the ZIP |
+
+### KIT System (required for `/go-science kit` commands)
+
+| Requirement | Notes |
+|------------|-------|
+| **Google Account** | Needed for Google Sheets — the primary data layer for the KIT database |
+| **Google Sheet** | Create one at sheets.google.com before your first `/go-science kit setup` |
+| **Google Sheets MCP** | Claude Code plugin that lets Claude read/write your KIT database. See setup note below. |
+| **Internet access** | The Research Agent searches for industry news, social profiles, and festival context |
+
+> **Google Sheets MCP Setup:** To connect Claude Code to Google Sheets, you need to add the Google Sheets MCP to your Claude Code settings. Without it, the KIT system falls back to local CSV files — functional, but you won't be able to view or edit the database in a spreadsheet. Run `/go-science kit upgrade` at any time to migrate from CSV to Google Sheets once the MCP is connected.
+
+### Optional but Useful
+
+| Tool | Why It Helps |
+|------|------------|
+| **VS Code** | View and edit knowledge base files, SKILL.md, kit-knowledge.md |
+| **Python 3 (Windows)** | Enables running the analysis scripts if you need to inspect the Excel database |
 
 ---
 
@@ -260,9 +282,12 @@ go-science-skill/
 │   │   └── marketplace.json           ← Skill registration
 │   └── skills/
 │       └── go-science/
-│           └── SKILL.md               ← The skill (13 agents, 6 commands)
+│           ├── SKILL.md               ← The skill (5 agent layers, 8 commands + KIT system)
+│           ├── kit-knowledge.md       ← KIT science: hooks, field gate, WIIFT, segments
+│           └── my-go-context.md       ← Your personal business context (fill this in)
 └── knowledge/
-    └── ay-science-knowledge.md        ← Full GO program knowledge base (784 lines)
+    ├── ay-science-knowledge.md        ← Full GO program knowledge base
+    └── landing-page-knowledge.md      ← Landing page structure + 9-site analysis
 ```
 
 ---

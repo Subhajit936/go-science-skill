@@ -175,40 +175,131 @@ Images amplify a message when used correctly. They destroy it when used incorrec
 
 ---
 
-## Data Required Per Client for Effective KIT
+## Hard Field Gate — Required Before Any Message Can Be Created
 
-**Minimum required (KIT will work but limited):**
-- Name + addressed_as
-- Company name + what they actually do
-- Client segment (active/lost-amicable/lost-hold/lost-problematic/lead)
-- Preferred communication channel
-- Accountable person (who sends the message)
-- Last contact date
+**This is an absolute hard gate. No KIT message can be drafted without these fields. Missing fields = stop + ask. There are no exceptions.**
 
-**Recommended (KIT becomes significantly more personalized):**
-- Psychographic traits
-- Religion
-- DOB (birthday)
-- DOA (project start/anniversary date)
-- Leaving month (if lost client)
-- Brief description of how relationship ended (for lost clients)
-- Industry context / what's happening in their industry
+The following fields are required because each one enables a critical personalization decision:
 
-**Full (KIT becomes highly personalized and responsive):**
-- Complete KIT history (what was sent, when, hook type used)
-- Response log (what they said, sentiment)
-- Social media profiles (for research on what they're up to)
-- Google Doc link (project chronology)
-- Any specific memories or inside references
+| Field | Column Name | Why It Is Required |
+|-------|------------|-------------------|
+| Unique ID | `id` | Prevents duplicates, links log to client |
+| Sale / Project Date | `Sale Date` | Enables anniversary hooks, calculates relationship age |
+| Company Name | `company_name` | Every compliment and bridge uses this |
+| First Name | `first_name` | Required for salutation |
+| Addressed As | `addressed_as` | The name they are ACTUALLY called — may differ from first name |
+| Last Name | `last_name` | Required for formal messages and logging |
+| WhatsApp Mobile | `mobile_wa` | Primary message delivery channel |
+| Document Link | `doc_link` | Project chronology — source of specific memories and compliments |
+| Email | `email` | Delivery channel, backup contact |
+| Secondary Email | `secondary_email` | Useful for corporate contacts |
+| Website | `website` | Research source — what they publicly claim |
+| Data Source | `data_source` | How this person came in — affects tone and history |
+| Industry | `industry` | Industry trend and news hooks require this |
+| Address | `address` | Physical KIT, regional context |
+| State | `state` | Festival relevance (regional festivals), regional tone |
+| City | `city` | Hyper-local context, regional hooks |
+| Pin Code | `pin_code` | Delivery precision for physical KIT |
+| Country | `country` | Festival calendar, language selection |
+| Psychographic | `psychographic` | Psychographic-to-hook mapping — without this, hook selection is a guess |
+| Leaving Month | `leaving_month` | For lost clients — timing of reactivation, seasonal hooks |
+| Tags | `tags` | Flexible classification |
+| Project Anniversary (DOA) | `doa` | Anniversary hooks — among the most powerful personal hooks |
+| Date of Birth (DOB) | `dob` | Birthday hooks — most personal of all hooks |
+| Religion | `religion` | Festival selection — cross-religion errors are relationship destroyers |
+| Gender | `gender` | Tone and language calibration |
+| Preferred Language | `preferred_language` | Message written in wrong language = message not read |
+| Preferred Channel | `preferred_communication_channel` | Critical — wrong channel = message ignored |
+| Accountable Person | `accountable_person` | The person who owns this relationship and signs the message |
+| Remarks | `remarks` | Relationship history — without this, segment classification is wrong and the hook is hollow |
+| What Has To Be Done | `what_to_be_done` | Any pending action, promise, or specific context that changes what can be said |
+| Facebook Profile | `facebook_profile` | Research source for Research Agent |
+| LinkedIn | `linkedin` | Professional context, industry signal, social proof hooks |
+| Instagram | `instagram` | Personal interests, lifestyle signals, informal hooks |
+
+**If ANY of these fields is missing when a draft is requested:**
+1. STOP — do not proceed to Research Agent
+2. List exactly which fields are missing
+3. Ask: "To draft [Name]'s KIT message, I need: [missing fields]. Can you provide these?"
+4. Only proceed once all required fields are confirmed
+
+**Exception:** If the missing field genuinely cannot be known (e.g., religion for a recent lead), mark it as `unknown` and note in the draft that the corresponding hook type (e.g., festival) has been excluded.
 
 ---
 
-## The CSV Data Structure
+## WIIFT Gate — Mandatory Check Before Every Draft
+
+**WIIFT = What's In It For Them**
+
+This is a hard gate that runs AFTER the Research Agent produces a Hook Brief and BEFORE the Drafting Agent writes a single word.
+
+**The WIIFT Question:** "Does this message deliver something real for the recipient — educational insight, pain-point acknowledgment, a useful resource, a genuine memory, or a genuine emotion — or is it just warm noise?"
+
+**Warm is NOT enough. The message must carry value.**
+
+| Message Type | What Counts as Value |
+|-------------|---------------------|
+| Industry Trend | A specific insight they may not know — not generic |
+| Education/Insight | Actionable or perspective-shifting information |
+| Festival | A non-obvious fact about the festival + a genuine connection to their world |
+| Memory Recall | A specific, accurate memory that shows you were paying attention |
+| Story Share | A story with a lesson that applies to their situation |
+| Resource/Book/Tool | Something genuinely useful for their business or life |
+| Personal Date | Pure acknowledgment — this IS the value (no additional value required) |
+| Random Thought | A genuine observation — not manufactured |
+
+**WIIFT Failure Cases (message must be revised before sending):**
+- "I was thinking of you and wanted to reach out" → warm noise, no value
+- "Hope you're doing well, just checking in!" → no hook, no value
+- "Just wanted to stay in touch!" → the reader gets nothing
+- Any festival message that is just "Wishing you a Happy [X]!" → generic, not KIT
+
+**If WIIFT check fails:** The Research Agent must find a new hook angle with genuine value. The Drafting Agent never receives a brief that fails WIIFT.
+
+---
+
+## Data Storage — Google Sheets as Primary from Day 1
+
+**Google Sheets is the PRIMARY data layer. Not CSV. Not a database.**
+
+**Why:**
+- The user needs to see, edit, and add data without technical tools
+- The Accountable Person needs to see who is due for KIT
+- Multiple team members may need to view the same database
+- Google Sheets is the mutual frontend between user + Claude
+
+**Setup Flow (first time):**
+1. User runs `/go-science kit setup`
+2. System asks: "Do you have a Google Sheet you want to use for your KIT database, or should I create one?"
+3. If user provides a sheet link: use it — add the required columns to that sheet
+4. If no sheet: guide user to create one, then share the link → system creates the column structure
+5. All data from Day 1 goes into Google Sheets
+
+**If Google Sheets MCP is not connected:**
+- Explain: "To use Google Sheets for KIT, you need the Google Sheets MCP connected. Here's how: [setup instructions]"
+- Offer CSV as a temporary fallback ONLY — "For now, I can store your data in a local CSV file. You can migrate to Google Sheets at any time using `/go-science kit upgrade`."
+- CSV is never the default choice — it is the fallback when Sheets MCP is not available
+
+**Google Sheets Column Structure (mirrors the Required Fields):**
+```
+id | Sale Date | company_name | first_name | addressed_as | last_name | mobile_wa | doc_link | email | secondary_email | website | data_source | industry | address | state | city | pin_code | country | psychographic | leaving_month | tags | doa | dob | religion | gender | preferred_language | preferred_communication_channel | accountable_person | remarks | what_to_be_done | facebook_profile | linkedin | instagram | segment | status | created_date | last_updated
+```
+
+**KIT Log Sheet (separate tab or sheet):**
+```
+log_id | client_id | company | kit_number | scheduled_date | sent_date | channel | hook_type | message_summary | full_message | response_received | response_text | response_sentiment | next_kit_date | next_hook_suggestion | sent_by | notes
+```
+
+---
+
+## CSV Fallback Structure (only when Google Sheets MCP not available)
+
+CSV is the FALLBACK — not the default. The system always tries Google Sheets first.
 
 ### File 1: `kit-clients.csv`
 Columns:
 ```
-client_id, name, addressed_as, company, industry, segment, psychographic, religion, dob, doa, preferred_channel, accountable_person, leaving_month, social_linkedin, social_instagram, social_facebook, doc_link, relationship_notes, status, created_date, last_updated
+id, sale_date, company_name, first_name, addressed_as, last_name, mobile_wa, doc_link, email, secondary_email, website, data_source, industry, address, state, city, pin_code, country, psychographic, leaving_month, tags, doa, dob, religion, gender, preferred_language, preferred_communication_channel, accountable_person, remarks, what_to_be_done, facebook_profile, linkedin, instagram, segment, status, created_date, last_updated
 ```
 
 **segment values:** active | lost-amicable | lost-hold | lost-problematic | lead

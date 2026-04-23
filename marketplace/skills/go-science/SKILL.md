@@ -1018,22 +1018,32 @@ WHAT TO FIX:
 
 ### KIT Sub-Agent 1 — Database Agent
 
-**Job:** Create, read, update, and manage the two CSV files. Calculate schedules. Track status. Never drafts messages.
+**Job:** Create, read, update, and manage the client database (Google Sheets primary; CSV fallback). Calculate schedules. Track status. Never drafts messages.
 
 **On `kit setup` (first-time or if files missing):**
-1. Create `~/.claude/plugins/marketplaces/go-science/kit-data/` directory
-2. Create `kit-clients.csv` with headers:
-   `client_id,name,addressed_as,company,industry,segment,psychographic,religion,dob,doa,preferred_channel,accountable_person,leaving_month,social_linkedin,social_instagram,social_facebook,doc_link,relationship_notes,status,created_date,last_updated`
-3. Create `kit-log.csv` with headers:
-   `log_id,client_id,company,kit_number,scheduled_date,sent_date,channel,hook_type,message_summary,full_message,response_received,response_text,response_sentiment,next_kit_date,next_hook_suggestion,sent_by,notes`
-4. Confirm to user: "KIT database initialized. Use `/go-science kit add [client name + details]` to add your first client."
+1. Ask the user: "Do you have a Google Sheet you want to use for your KIT database, or should I create one for you? (Paste your Google Sheet link, or type 'create new')"
+2. **If Google Sheets MCP is connected AND user provides a sheet:**
+   a. Verify the sheet is accessible
+   b. Create two tabs: "Clients" and "KIT Log" (if they don't exist)
+   c. Add all required column headers to the Clients tab:
+      `id | Sale Date | company_name | first_name | addressed_as | last_name | mobile_wa | doc_link | email | secondary_email | website | data_source | industry | address | state | city | pin_code | country | psychographic | leaving_month | tags | doa | dob | religion | gender | preferred_language | preferred_communication_channel | accountable_person | remarks | what_to_be_done | facebook_profile | linkedin | instagram | segment | status | created_date | last_updated`
+   d. Add KIT Log column headers to the KIT Log tab
+   e. Save the Sheet ID to `kit-config.json` in `~/.claude/plugins/marketplaces/go-science/kit-data/`
+   f. Confirm: "KIT database connected to your Google Sheet. Use `/go-science kit add [details]` to add your first client."
+3. **If Google Sheets MCP is NOT connected:**
+   - Explain: "To use Google Sheets (recommended), you need the Google Sheets MCP. I'll set up a local CSV file as a fallback for now -- you can migrate to Google Sheets anytime with `/go-science kit upgrade`."
+   - Create `~/.claude/plugins/marketplaces/go-science/kit-data/` directory
+   - Create `kit-clients.csv` and `kit-log.csv` with the same column structure as above
+   - Confirm: "KIT database initialized (local CSV). Run `/go-science kit upgrade` when you're ready to move to Google Sheets."
 
 **On `kit add [client details]`:**
-1. Parse the user's input — extract: name, addressed_as, company, industry, segment, psychographic, religion, preferred_channel, accountable_person, and any other available fields
-2. If fields are missing, ask only for: name, addressed_as, company, segment, preferred_channel, accountable_person
-3. Generate a unique client_id (format: CLT-001, CLT-002...)
-4. Append row to `kit-clients.csv`
-5. Confirm: "[Company] added to KIT database as [segment]. First KIT due: [today's date]. Run `/go-science kit draft [company]` to create the first message."
+1. Parse the user's input -- extract all available fields
+2. Run the **Hard Field Gate** check (from `kit-knowledge.md`): verify all 33 required fields are present or accounted for
+3. For any missing required field: stop and list exactly what is missing -- "To add this client, I still need: [list]. Please provide these."
+4. Exception: if a field genuinely cannot be known (e.g., religion for a new lead), it may be set to `unknown` -- but this must be explicit, not assumed
+5. Generate a unique id (format: CLT-001, CLT-002...)
+6. Add row to the active data layer (Google Sheets if connected; CSV if not)
+7. Confirm: "[Company] added to KIT database as [segment]. First KIT due: [today's date]. Run `/go-science kit draft [company]` to create the first message."
 
 **On `kit schedule` or "who needs KIT this week":**
 1. Read `kit-log.csv` — find each client's most recent `next_kit_date`
@@ -1051,15 +1061,15 @@ WHAT TO FIX:
 6. Determine `next_hook_suggestion` based on response_sentiment and last hook used
 7. Confirm log entry + show next scheduled date + hook suggestion
 
-**On `kit upgrade` (CSV to Google Sheets):**
+**On `kit upgrade` (CSV to Google Sheets migration):**
 1. Verify Google Sheets MCP is connected by checking available tools
-2. If not connected: explain the setup steps (share the Google Sheets MCP GitHub link and explain OAuth setup) — stop here
+2. If not connected: explain the setup steps (share the Google Sheets MCP GitHub link and explain OAuth setup) -- stop here
 3. If connected:
-   a. Read all rows from `kit-clients.csv`
-   b. Create a new Google Sheet named "KIT Database — [Today's Date]"
-   c. Create Sheet 1 named "Clients" — push all client data
-   d. Create Sheet 2 named "KIT Log" — push all log data
-   e. Save the Sheet ID to a config file: `kit-config.json` in `kit-data/`
+   a. Read all rows from `kit-clients.csv` and `kit-log.csv`
+   b. Ask: "Should I create a new Google Sheet, or do you have an existing one? (Paste link or type 'create new')"
+   c. Create or connect the Sheet; create "Clients" and "KIT Log" tabs
+   d. Push all CSV data to the respective tabs
+   e. Save the Sheet ID to `kit-config.json` in `kit-data/`
    f. From this point forward, read and write to Google Sheets instead of CSV
 4. Confirm: "Migration complete. Your KIT database is now live at [Sheet URL]. All future reads and writes will use Google Sheets."
 
@@ -1080,8 +1090,12 @@ WHAT TO FIX:
 **Job:** Given a client profile, identify the best hook angle for this specific KIT touch. Never writes the message — only produces a brief for the Drafting Agent.
 
 **On `kit draft [client]`:**
-1. Read client profile from `kit-clients.csv`
-2. Read their KIT history from `kit-log.csv` — what hook types have been used before?
+0. **Field Gate check (hard gate -- runs before anything else):**
+   - Load client profile from the active data layer (Google Sheets or CSV)
+   - Verify all 33 required fields are present (see `{{KIT_KB_PATH}}` Hard Field Gate section)
+   - If ANY required field is missing: STOP -- do not proceed. Report missing fields to user and ask for them first.
+1. Read client profile -- confirm all data is loaded
+2. Read their KIT history -- what hook types have been used before?
 3. Check today's date — is there a festival within the next 7 days that matches their religion? (Use the festival calendar in `kit-knowledge.md`)
 4. Check their psychographic — which hook angles work best for them?
 5. Check what is happening in their industry right now — if internet access available, do a quick search
@@ -1113,7 +1127,12 @@ SIGN OFF AS: [accountable person]
 **Job:** Take the Hook Brief from the Research Agent + client profile → produce the actual KIT message.
 
 **On receiving a Hook Brief:**
-1. Read `kit-knowledge.md` — specifically the 4-Part Invisible Structure and the KIT sequence rules
+0. **WIIFT Gate (hard gate -- runs before writing a single word):**
+   - Ask: "Does this hook deliver something real for the recipient -- an insight, a useful resource, a genuine memory, a non-obvious fact, or a perspective shift?"
+   - If YES → proceed to drafting
+   - If NO → send back to Research Agent with: "This hook is warm noise. WIIFT failed. Find an angle that carries real value for [Name] -- educational insight, pain-point acknowledgment, or a specific memory."
+   - Generic warm openers ("Hope you're well", "Just checking in", "Thinking of you") → automatic WIIFT failure
+1. Read `kit-knowledge.md` -- specifically the 4-Part Invisible Structure and the KIT sequence rules
 2. Build the message using: Hook → Bridge → Compliment → Soft Open Door
 3. Apply language preference (Hindi mix for Hindi-preferring clients, pure English for international)
 4. Keep length appropriate to KIT number:
