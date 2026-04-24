@@ -230,7 +230,7 @@ You don't need to type the exact command. Just ask naturally:
 
 | Term | Meaning |
 |------|---------|
-| **MCB** | Mass Control Bed — curiosity message based on secret desire |
+| **MCB** | Mass Control Bait — curiosity message based on secret desire |
 | **MoA** | Market of Avatar — your ideal client |
 | **NDFF** | Needs, Desires, Fears, Frustrations — extracted from MoA Interviews |
 | **ARC** | Affinity, Reality, Communication — foundation of all marketing |

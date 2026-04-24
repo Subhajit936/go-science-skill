@@ -40,7 +40,7 @@ All 13 must be implemented **in sequence**. Partial implementation does not prod
 ### Step 1 — Signature MCB
 
 **What it is:**
-MCB = **Mass Control Bed** — a mass-scale curiosity-generating message, like a fishing net cast across multiple platforms to attract ideal clients.
+MCB = **Mass Control Bait** — a mass-scale curiosity-generating message, like a fishing net cast across multiple platforms to attract ideal clients.
 
 **Why it is:**
 Without a Signature MCB, your marketing is inconsistent and scattered. You cannot have a working 4-Phase, you cannot run effective CMA, and you cannot build ARC at scale. Everything else depends on having one crisp MCB that works again and again.
@@ -503,7 +503,7 @@ CMA = all the activities you do to build curiosity and attract clients into your
 Without consistent CMA, the pipeline goes dry. Most business owners do CMA sporadically — they push hard when they need clients, then stop when they're busy. AY teaches CMA as a *constant, systematic activity*, not a reaction to revenue pressure.
 
 **How it is:**
-MCB (Mass Control Bed) → sent through multiple platforms → prospects get curious → prospects raise their hand → they enter **Strong Foundation** (Stage 2 of SBJ).
+MCB (Mass Control Bait) → sent through multiple platforms → prospects get curious → prospects raise their hand → they enter **Strong Foundation** (Stage 2 of SBJ).
 
 **In what context AY uses it:**
 CMA is the engine that fills the pipeline. Without it running consistently, all other steps (4-Phase, IRO, KIT) have no new material to work with.
@@ -704,7 +704,7 @@ The answer: Act as a fellow drug dealer. Enter HIS world. Speak HIS language.
 | GO | Get Overbooked — flagship program |
 | SOS | Sales on Steroids — first module |
 | USC | Ultimate Sales Engine — second module |
-| MCB | **Mass Control Bed** — mass-scale curiosity message based on MoA's secret desire |
+| MCB | **Mass Control Bait** — mass-scale curiosity message based on MoA's secret desire |
 | Signature MCB | Your one core MCB that anchors all marketing |
 | MoA | Market of Avatar — your ideal client profile |
 | Market 2.0 | Target market + ideal customer + niche = your specific pond |
@@ -741,7 +741,7 @@ The answer: Act as a fellow drug dealer. Enter HIS world. Speak HIS language.
 | "arc" | ARC Triangle — Affinity, Reality, Communication |
 | "overbooked" | Fully booked with ideal clients — the goal |
 | "database" | Consolidated list of all past clients, leads, referrals |
-| "M-C-B" | MCB — Mass Control Bed |
+| "M-C-B" | MCB — Mass Control Bait |
 | "i-r-o" | IRO — Irresistible Offer |
 | "S-B-J" | SBJ — Smart Buyer Journey |
 

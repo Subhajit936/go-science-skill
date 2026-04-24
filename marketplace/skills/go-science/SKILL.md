@@ -1120,7 +1120,7 @@ WHAT TO FIX:
 | "B fixing" / "BPT" | BE Fixing — Step 13 |
 | "arc" | ARC Triangle — Affinity, Reality, Communication |
 | "overbooked" | Fully booked with ideal clients |
-| "M-C-B" | MCB — Mass Control Bed |
+| "M-C-B" | MCB — Mass Control Bait |
 | "i-r-o" | IRO — Irresistible Offer |
 | "S-B-J" | Smart Buyer Journey |
 | "GoScience audit" / "Go Science audit" | `/go-science content-audit` |

@@ -155,7 +155,7 @@ Write-Host "  4. Try: /go-science explain MCB" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Available commands:" -ForegroundColor White
 Write-Host "  /go-science validate [your message]    - Check if content follows AY science" -ForegroundColor DarkCyan
-Write-Host "  /go-science generate MCB               - Create a Mass Control Bed message" -ForegroundColor DarkCyan
+Write-Host "  /go-science generate MCB               - Create a Mass Control Bait message" -ForegroundColor DarkCyan
 Write-Host "  /go-science analyze [message]          - See which emotions a message triggers" -ForegroundColor DarkCyan
 Write-Host "  /go-science audit [business details]   - Full 13-step GO audit" -ForegroundColor DarkCyan
 Write-Host "  /go-science explain [concept]          - Explain any GO term or framework" -ForegroundColor DarkCyan
