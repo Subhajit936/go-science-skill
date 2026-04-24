@@ -159,6 +159,84 @@ Festival messages follow the same structure but with one additional rule: **The 
 
 ---
 
+## Community-Specific Festival Names, Greetings & Offense Check
+
+India is extraordinarily diverse. The same festival often has a completely different name, different significance, and different greeting across communities. Using the wrong name signals you don't know the person — which destroys the entire purpose of a KIT message.
+
+**The rule:** Always use the community-specific name. Never use the generic Sanskrit/textbook name when a community-specific name exists.
+
+**If community is unknown:** Ask one clarifying question before drafting. "For [Name]'s [Festival] message — should I address it as [Name A] (used by [Community]) or [Name B] (used by [Community])? This changes how the message opens and closes." If the operator refuses to clarify, use the most widely understood name and log as "community unconfirmed."
+
+---
+
+### Community Festival Name Reference
+
+| Festival (Generic Name) | Community | Community Name | Key Significance Difference |
+|------------------------|-----------|---------------|----------------------------|
+| Akshaya Tritiya | Marwari / Rajasthani | **Akha Teej** | Auspicious for gold buying, new ventures, weddings |
+| Akshaya Tritiya | Bengali / North Indian Hindi | Akshaya Tritiya | Same, no name change for Bengali |
+| Akshaya Tritiya | Gujarati | **Akha Trij / Akha Teej** | Auspicious for gold, weddings |
+| Makar Sankranti | Gujarati | **Uttarayan** | Kite festival — completely different celebration feel |
+| Makar Sankranti | Tamil / Tamil Nadu | **Pongal** | 4-day harvest festival — completely separate identity, NOT just "Sankranti" |
+| Makar Sankranti | Telugu / Andhra / Telangana | **Sankranti / Pedda Panduga** | Multi-day, includes Bhogi, Makara Vilakku elements |
+| Makar Sankranti | Punjabi (Hindu) | Lohri (day before) + Sankranti | Lohri is the main celebration for Punjabis |
+| Makar Sankranti | Maharashtrian | Makar Sankranti (same) | Tilgul custom — exchange sesame-jaggery sweets; greeting: "Tilgul ghya, god god bola" |
+| Diwali | Sikh | **Bandi Chhor Divas** | Guru Hargobind Ji's release from imprisonment — NOT the same as Hindu Diwali. More solemn, spiritually distinct. |
+| Diwali | Jain | Diwali = Nirvana Day of Mahavira | Mahavira's nirvana/moksha — deeply spiritual, more subdued than Hindu Diwali |
+| Diwali (day after) | Gujarati | **Bestu Varas / Navu Varsh** | Gujarati New Year — often MORE important than Diwali itself |
+| New Year (April) | Bengali | **Pohela Boishakh / Poila Baisakh** | Bengali New Year (April 14–15) — massive cultural celebration |
+| New Year (April) | Tamil | **Puthandu / Tamil Puthandu** | Tamil New Year (April 14) |
+| New Year (April) | Malayali / Kerala | **Vishu** | Kerala New Year (April 14–15) — "Vishukkani" first sight ritual |
+| New Year (April) | Maharashtrian | **Gudi Padwa** | Maharashtrian New Year — Gudi (flag pole) hoisted at home |
+| New Year (April) | Telugu / Kannada | **Ugadi** | Telugu and Kannada New Year — same day as Gudi Padwa |
+| Navratri | Gujarati | **Navratri** (same name but distinct celebration) | Garba dancing is the central element — culturally the biggest event of the year |
+| Navratri | Bengali | **Durga Puja** | The single most important Bengali festival. Spans 5 days (Shashthi to Dashami). Calling it "Navratri" to a Bengali is tone-deaf. |
+| Dussehra | Bengali | **Dashami / Vijaya Dashami** | Marked by Sindoor Khela (married women), idol immersion. Greeting: "Shubho Bijoya" |
+| Ganesh Chaturthi | Maharashtrian | Ganesh Chaturthi (same) | The single most important Maharashtrian festival — 10-day celebration. "Ganpati Bappa Morya" greeting. |
+| Guru Nanak Jayanti | Sikh | **Gurpurab** | "Waheguru Ji Da Gurpurab" — not just "Happy Guru Nanak Jayanti" |
+| Baisakhi | Sikh | **Vaisakhi** | Founding of Khalsa Panth by Guru Gobind Singh — spiritually very significant |
+| Persian New Year | Parsi / Irani | **Nowruz** | March 20–21 — completely separate calendar. If the client is Parsi, this is their New Year. |
+| Day before Nowruz | Parsi | **Pateti** | Day of repentance and renewal — NOT the same as Nowruz celebration |
+
+---
+
+### Community Greeting Reference
+
+| Community | Formal / Religious Greeting | Casual / Warm Greeting | Avoid |
+|-----------|---------------------------|----------------------|-------|
+| Marwari / Rajasthani | "Jai Shri Krishna" | "Ram Ram Sa" | Generic "Happy [Festival]" without the community name |
+| Bengali (Hindu) | "Shubho [Festival Name]" | "Shubho [Festival]" | Calling Durga Puja "Navratri" — they are not the same |
+| Gujarati | "Saal Mubarak" (New Year) | "Jai Shri Krishna" | Saying "Happy Diwali" without mentioning "Bestu Varas" for New Year |
+| Punjabi (Sikh) | "Waheguru Ji Ka Khalsa, Waheguru Ji Ki Fateh" | "Sat Sri Akal" | Calling Bandi Chhor Divas "Diwali" |
+| Punjabi (Hindu) | "Jai Shri Krishna" | Lohri: "Lohri diyan lakh lakh vadhaiyan" | — |
+| Jain | "Jai Jinendra" | "Michhami Dukkadam" (during Paryushana) | Sending Navratri/Dussehra messages (Jains observe Paryushana at same time — different significance) |
+| Maharashtrian | "Ganpati Bappa Morya" (Ganesh Chaturthi) | "Shubhechha" | — |
+| Tamil | "Iniya [Festival] Nalvazhthukkal" | "Vanakkam" | Calling Pongal "Sankranti" |
+| Telugu / Andhra | "Ugadi Subhakankshalu" | — | Calling Ugadi "Gudi Padwa" (Maharashtrian equivalent) |
+| Sikh | "Waheguru Ji Ka Khalsa, Waheguru Ji Ki Fateh" | "Sat Sri Akal" | "Happy Diwali" to a Sikh without acknowledging Bandi Chhor Divas |
+| Parsi | "Sal Mubarak" (Nowruz) | — | Sending Diwali messages as "their festival" — it isn't |
+| Muslim | "Eid Mubarak" / "Ramadan Mubarak" | — | Sending Hindu festival messages |
+| Christian | "Merry Christmas" / "Happy Easter" | — | Sending Diwali/Hindu festival messages |
+
+---
+
+### Community Offense Check — Hyper-Personalization Red Lines
+
+When going deep on community-specific personalization, these are known sensitive areas. When in doubt about any of these, ask before including:
+
+| Community | Known Sensitivity | Rule |
+|-----------|------------------|------|
+| **Bengali** | Bengalis take cultural pride very seriously. Conflating West Bengal and Bangladesh cultures is offensive. Durga Puja is not just a festival — it is an identity. | Never mix up Durga Puja with generic Navratri. Use "Shubho Bijoya" for Dashami, not "Happy Dussehra." |
+| **Jain** | Using "Jai Jinendra" is appreciated and NOT offensive — Jains love when non-Jains know this. However, Jain Diwali has a completely different significance (nirvana of Mahavira) — don't conflate with loud fireworks/celebration tone. | Keep Jain Diwali tone reflective and spiritual, not celebratory-commercial. "Michhami Dukkadam" during Paryushana is deeply meaningful — use it. |
+| **Sikh** | Bandi Chhor Divas is NOT "Sikh Diwali" — calling it that reduces a profound religious event to a cultural comparison. Also: Guru Granth Sahib is never casually referenced. | Never say "your Diwali." Say Bandi Chhor Divas. "Waheguru Ji Ka Khalsa..." is always appropriate and appreciated. |
+| **Parsi** | A very small, very proud community. They know most people don't know their festivals. Knowing Nowruz and Pateti creates extraordinary connection. | If the client is Parsi, Nowruz (March 20–21) is the most important date. Use it. Pateti (day before) is the day of reflection — appropriate for a thoughtful message. |
+| **South Indian (Tamil, Telugu, Kannada, Malayalam)** | Each state has its own New Year, its own name for similar festivals. Lumping them as "South Indian" is tone-deaf. A Tamil client's Pongal ≠ a Telugu client's Sankranti. | Always check the specific state/language. Never send a generic "South Indian festival" message. |
+| **Marwari / Gujarati** | Very close communities, easy to confuse. Both call the festival "Akha Teej" but greetings and customs differ slightly. Gujaratis have Bestu Varas (their New Year on Diwali day) — this is massive for them. | Always distinguish. If unsure → ask: "Is this client Marwari or Gujarati?" |
+| **Muslim** | Never assume Eid dates — Eid is moon-dependent and exact date varies by 1–2 days and by region. | Check the correct date for the year before drafting. Never use a past year's Eid date. |
+| **General rule for all communities** | Using a community-specific greeting when you genuinely know the community = deep connection. Guessing incorrectly = worse than being generic. | If you are not sure of the community, default to the widely-understood name and note "community unconfirmed" in the log. Never guess a community-specific greeting without confirmation. |
+
+---
+
 ## The Image Attachment Rules
 
 Images amplify a message when used correctly. They destroy it when used incorrectly.

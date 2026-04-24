@@ -5,6 +5,73 @@
 
 ---
 
+## CRITICAL RULE — READ BEFORE USING ANY SECTION IN THIS FILE
+
+**Content is always written TO the end customer — never ABOUT the brand.**
+
+The most common landing page failure: the content talks about the business ("We provide X", "Our company does Y") instead of talking to the end customer about their life, their problem, and their desire.
+
+Before using any section in this file, the following must be established:
+1. **Who is the end customer?** — The person who lands on this page. Not the brand. Their specific situation.
+2. **What is their secret desire?** — This becomes the MCB (= the hook — they are the same thing).
+3. **What one action should they take?**
+
+**Voice test for every line of copy:** "Is this talking ABOUT the business, or is it talking TO the end customer?"
+- "Nakoda Diagnostics provides reports in 1 hour" → ABOUT the business → rewrite
+- "When your child has a 104°F fever at 10pm and every hospital lab has a 12-hour wait — you need answers before midnight. We're the ones who show up." → TO the end customer → correct
+
+---
+
+## MANDATORY CORE SKELETON — Every Landing Page, Every Time
+
+This is the non-negotiable spine of every landing page built using this knowledge base. Section names and designs can vary. This sequence and these five elements cannot.
+
+```
+1. MCB (= Hook) — The opening line that speaks to the end customer's secret desire.
+                  Makes them feel: "This is exactly for me."
+2. PAIN POINTS  — 4–6 specific frustrations the end customer is currently experiencing.
+                  Written in the end customer's language, not the brand's language.
+3. SOLUTION     — The bridge: this business/service is the answer to those exact pains.
+                  Introduce the mechanism — what makes this different.
+4. PROOF        — Real people, real outcomes. Testimonials with specific results.
+                  Numbers, names, before/after. Phase 3 of 4-Phase framework.
+5. FINAL CTA    — One specific, low-risk next step. Remove all hesitation.
+```
+
+Trust elements (stat strips, badge bars, logos, certifications, scarcity) are connective tissue — placed BETWEEN the above five, never replacing any of them.
+
+---
+
+## BASIC DESIGN RULES — Never Override These
+
+GO science produces the copy strategy. These rules govern the structure and presentation. Both must be respected simultaneously.
+
+**Layout (non-negotiable):**
+- Contact details (address, phone, email) belong in the FOOTER — never placed as a standalone mid-page section
+- Landing page navigation: logo only + one CTA button — no full menu (menus create exit routes)
+- Hero: MCB headline + big promise + CTA must all be visible without scrolling (above the fold)
+- Mobile-first: all sections must work at 375px screen width
+
+**Color:**
+- Maximum 3 colors: primary brand color + neutral + accent for CTA buttons
+- CTA buttons: high contrast against the page background — if page is white, button is bold (deep blue / orange / green)
+- Healthcare / diagnostics: blue + white dominant (trust + cleanliness)
+- Finance / premium services: dark navy or black + gold accents
+- Red is for urgency/scarcity callouts ONLY — never as a primary page color
+
+**Typography:**
+- Maximum 2 fonts: one for headlines, one for body
+- Heading hierarchy: H1 (main MCB) → H2 (section titles) → H3 (sub-points)
+- Body text: 16px minimum
+- ALL CAPS: labels and badges only — never body paragraphs
+
+**Spacing:**
+- Consistent section padding: 80–100px top and bottom
+- Text column max width: 700px for readability
+- CTA buttons need 40px breathing room above and below
+
+---
+
 ## HOW TO USE THIS FILE
 
 This knowledge base is a structural reference for Channel Agent 1 (Landing Page) and Channel Agent 14 (Four-Phase Website). It explains every section that appears on a GO-aligned landing page — what it is, why it exists, the GO principle behind it, when to use each variant, and real examples extracted from analyzed sites.
